@@ -1,0 +1,13 @@
+{% extends "main_app/header.html" %}
+
+
+{%block title %} 3d Grapher {% endblock %}
+
+{% block content %}
+
+{% include "main_app/includes/equation_form.html"%}  <!-- include create_euqation_form() -->
+
+<button class="btn btn-primary" id="create_equation_button" onclick="create_equation_form();"> Add Equation </button>
+
+
+{% endblock %}

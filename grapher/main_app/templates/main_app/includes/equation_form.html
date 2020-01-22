@@ -1,0 +1,56 @@
+<script type="text/javascript">
+  var eq_input_count = 0
+
+  function create_equation_form() {
+    if (! document.querySelector('#equations_form')){
+      var equations_form = document.createElement('form');
+      equations_form.id = "equations_form" ;
+      equations_form.method = "post" ;
+      equations_form.action = "/make_graph";
+      equations_form.innerHTML += '{% csrf_token %}';
+
+      document.body.appendChild(equations_form);
+
+    }
+    else{
+      var equations_form = document.querySelector("#equations_form");
+    }
+
+    make_graph_btn = equations_form.querySelector('#make_graph_btn') ; 
+    if (! make_graph_btn) {
+      var make_graph_btn = document.createElement('input');
+      make_graph_btn.type = "submit";
+      make_graph_btn.className = "btn btn-primary";
+      make_graph_btn.id = "make_graph_btn";
+      make_graph_btn.textContent = "Graph";
+
+      equations_form.appendChild(make_graph_btn); // put it into the DOM
+    }
+    
+    {
+      var equation_div = document.createElement("div");
+      equation_div.className = "form-group row";
+  
+      var equation_input = document.createElement("input");
+      equation_input.type = "text";
+      equation_input.className = "form-control col-sm-2"; // set the CSS class
+      equation_input.name = "equation_" + eq_input_count;
+      equation_input.id = "equation_input" + eq_input_count;
+      equation_input.placeholder="f(x,y,z)"
+      eq_input_count += 1 ;
+  
+  
+      var equation_label = document.createElement("label");
+      equation_label.textContent = "Equation "+eq_input_count+":";
+      equation_label.for = equation_input.name ;
+      equation_label.className = "col-sm-2 col-form-label"
+      
+      equation_div.appendChild(equation_label);
+      equation_div.appendChild(equation_input);
+  
+  
+      equations_form.insertBefore(equation_div, make_graph_btn); // put it into the DOM
+    }
+  }
+
+</script>
