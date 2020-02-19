@@ -1,0 +1,747 @@
+
+{% extends "main_app/header.html" %}
+
+
+{%block title %} Graph {% endblock %}
+
+{%block extra_headers %}
+
+    {% load static %}
+    <script type="text/javascript" src="{% static 'js/three.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/OrbitControls.js' %}"></script>
+    <style>
+        body { margin: 0; }
+        canvas { width: 100%; height: 100% }
+    </style>
+
+
+{%endblock%}
+
+
+{% block content %}
+<!-- 
+// Official HSV to RGB conversion 
+vec3 hsv2rgb( in vec3 c )
+{
+    vec3 rgb = clamp( abs(mod(c.x*6.0+vec3(0.0,4.0,2.0),6.0)-3.0)-1.0, 0.0, 1.0 );
+
+    return c.z * mix( vec3(1.0), rgb, c.y);
+}
+
+// Smooth HSV to RGB conversion 
+vec3 hsv2rgb_smooth( in vec3 c )
+{
+    vec3 rgb = clamp( abs(mod(c.x*6.0+vec3(0.0,4.0,2.0),6.0)-3.0)-1.0, 0.0, 1.0 );
+
+    rgb = rgb*rgb*(3.0-2.0*rgb); // cubic smoothing 
+
+    return c.z * mix( vec3(1.0), rgb, c.y);
+}
+
+// compare
+void mainImage( out vec4 fragColor, in vec2 fragCoord )
+{
+    vec2 uv = fragCoord.xy / iResolution.xy;
+    //h2 = 
+    highp float h = uv.y>0.5 ? -uv.y :0.7;
+    vec3 hsl = vec3( h, 1.0, 1.0 );
+
+    //vec3 rgb_o = hsv2rgb( hsl );
+    vec3 rgb_s = hsv2rgb_smooth( hsl );
+    
+//  vec3 rgb = mix( rgb_o, rgb_s, smoothstep( -0.2, 0.2, sin(2.0*iTime)) );
+    
+    fragColor = vec4( rgb_s, 1.0 );
+} -->
+    <script>
+        function f(x,y){
+            return 3*x;
+            // return Math.abs(x);
+            // return x
+            // return Math.sin(Math.sqrt(x**2  + y**2));
+            return +(x**2)+(y**2);
+            // return +(x**4)-(y**4);
+        }
+        function f2(x,y){
+            return x**2;
+        }
+        function f3(x,y){
+            return Math.sin(Math.sqrt(x**2  + y**2));
+            // return +(x**4)-(y**4);
+        }
+        function f3(x,y){
+            // return Math.sin(Math.sqrt(x**2  + y**2));
+            return +(x**4)-(y**4);
+        }
+
+        function VertexShader(){
+          return `
+            varying vec3 vColor;
+            uniform float z_max;
+            uniform float z_min;
+            
+            // Smooth HSV to RGB conversion 
+            vec3 hsv2rgb_smooth( in vec3 c )
+            {
+                vec3 rgb = clamp( abs(mod(c.x*6.0+vec3(0.0,4.0,2.0),6.0)-3.0)-1.0, 0.0, 1.0 );
+
+                rgb = rgb*rgb*(3.0-2.0*rgb); // cubic smoothing 
+
+                return c.z * mix( vec3(1.0), rgb, c.y);
+            }
+            vec3 hsv2rgb( in vec3 c )
+            {
+                vec3 rgb = clamp( abs(mod(c.x*6.0+vec3(0.0,4.0,2.0),6.0)-3.0)-1.0, 0.0, 1.0 );
+
+                return c.z * mix( vec3(1.0), rgb, c.y);
+            }
+            void main()
+            {
+                vec3 top = vec3(1.0, 0.0, 0.0); //red
+                vec3 middle = vec3(0.0, 1.0, 0.0); //green
+                vec3 bottom = vec3(0.0, 0.0, 1.0); //blue
+
+                float h = 1.0/3.0;
+                float h2 = 2.0/3.0;
+                vec3 black = vec3(0.0, 0.0, 0.0);
+
+
+                vec4 worldPosition = modelMatrix * vec4(position, 1.0);
+                vColor = vec3(1,1,1);
+
+                // vec3 hsl = vec3()
+                if (worldPosition.y > (z_max-abs(z_min))/2.0 ){
+                    vColor = mix(middle, top, ((worldPosition.y/(z_max))));
+                }
+                
+                else if (worldPosition.y < (z_max-abs(z_min))/2.0 ){
+                    vColor = mix(middle, bottom, -((worldPosition.y/(z_max))));
+                }
+                else if (worldPosition.y == (z_max-abs(z_min))/2.0 ){
+                    vColor = mix(middle, middle, -((worldPosition.y/(z_max))));
+                }
+                else{
+                    vColor = black;
+                }
+
+                gl_Position = projectionMatrix * viewMatrix * worldPosition;
+            }
+          `;
+        }
+          function FragmentShader(){
+            return `
+               precision mediump float;
+                varying vec3 vColor;
+                void main()
+                {
+                    gl_FragColor = vec4(vColor, 1.0);
+                }
+            `;
+        }
+  
+
+
+        function axes_lines(){
+            axes_size_start  = 0;
+            axes_size_end  = ( camera.position.x + camera.position.y + camera.position.z ) / 3.0;
+
+            line_width = 200 ;
+
+            var x_axis_material = new THREE.LineBasicMaterial( 
+                { 
+                    color: 0xff0000,
+                    linewidth: line_width,
+                } 
+            );
+            x_axis_material.depthWrite = false;
+            var x_axis_geometry = new THREE.Geometry();
+
+            x_axis_geometry.vertices.push( new THREE.Vector3( axes_size_start, 0, 0 ))
+            x_axis_geometry.vertices.push( new THREE.Vector3( axes_size_end, 0, 0 ))
+            var x_axis_line = new THREE.Line( x_axis_geometry, x_axis_material );
+
+            var y_axis_material = new THREE.LineBasicMaterial( 
+                { 
+                    color: 0x00ff00,
+                    linewidth: line_width,
+                } 
+            );
+            y_axis_material.depthWrite = false;
+            var y_axis_geometry = new THREE.Geometry();
+
+            y_axis_geometry.vertices.push( new THREE.Vector3( 0, axes_size_start, 0 ))
+            y_axis_geometry.vertices.push( new THREE.Vector3( 0, axes_size_end, 0 ))
+            var y_axis_line = new THREE.Line( y_axis_geometry, y_axis_material );
+
+            var z_axis_material = new THREE.LineBasicMaterial( 
+                { 
+                    color: 0x0000ff,
+                    linewidth: line_width,
+                } 
+            );
+            z_axis_material.depthWrite = false;
+            var z_axis_geometry = new THREE.Geometry();
+
+            z_axis_geometry.vertices.push( new THREE.Vector3( 0, 0, axes_size_start ))
+            z_axis_geometry.vertices.push( new THREE.Vector3( 0, 0, axes_size_end ))
+            var z_axis_line = new THREE.Line( z_axis_geometry, z_axis_material );
+
+            return [x_axis_line, y_axis_line, z_axis_line];
+        }
+
+        function make_cube(){
+            var geometry = new THREE.BoxGeometry( 1,1,1 );
+            var material = new THREE.LineBasicMaterial( {color : 0x00ff00 });
+            var cube = new THREE.Mesh( geometry, material );
+            return cube
+        }
+
+        function create_mesh_object(vertices, edges, faces, y_max, y_min){
+            // var graphMaterial = new THREE.MeshBasicMaterial({
+            //     color : "rgb(0,255,0)",
+            //     side: THREE.DoubleSide,
+            // });
+            var resolution = new THREE.Vector2(window.innerWidth,window.innerHeight);
+            console.log(resolution);
+            console.log("y_max"+y_max);
+            console.log("y_min"+y_min);
+            var uniforms = {
+                iResolution: {value: resolution},
+                z_max : {value : y_max},
+                z_min : {value : y_min},
+            }
+            var graphMaterial = new THREE.ShaderMaterial(
+                    {
+                        uniforms : uniforms,
+                        vertexShader: VertexShader(),
+                        fragmentShader: FragmentShader(),
+                        side: THREE.DoubleSide,
+                    }
+                )
+
+            var graphGeometry = new THREE.Geometry();
+            graphGeometry.vertices.push(...vertices);
+
+            graphGeometry.faces.push(...faces);
+
+            graphGeometry.computeBoundingBox();
+
+            graphGeometry.computeFaceNormals();
+            graphGeometry.computeVertexNormals();
+
+            var graphMesh = new THREE.Mesh( graphGeometry, graphMaterial);
+
+            pointsmaterial = new THREE.PointsMaterial({color:"rgb(255,0,0)", size:0.05})
+
+            var pointsmesh = new THREE.Points(graphGeometry.clone(), pointsmaterial);
+            scene.add(pointsmesh);
+
+            var indexesMode1 = 0 // face    //  mode: 0 nothing, 1 vertex, 2 face, 3 vertex & face
+            size = 0.1;
+            color = "rgb(255,0,0)";
+
+            var vertexFaceNumbersHelper1 = new vertexFaceNumbersHelper( graphMesh, indexesMode1, size, color );
+            vertexFaceNumbersHelper1.update( indexesMode1 );
+
+
+            var wireframe = new THREE.WireframeGeometry( graphGeometry );
+
+            var line = new THREE.LineSegments( wireframe);
+            line.material.color = new THREE.Color("rgb(0,0,0)");
+            line.material.depthTest = false;
+            line.material.opacity = 0.05;
+            line.material.transparent = true;
+
+            scene.add( line );
+
+
+            return graphMesh;
+        }
+
+    var textmeshes = [];
+
+    function createGraph(F)
+        {
+            var graphMeshes = [];
+            /*takes a list of functions as a parameter and returns a list of graphMeshes*/
+            for (var i = F.length - 1; i >= 0; i--) {
+                graphMeshes.push(_createGraph(F[i]));
+            }
+            return graphMeshes
+        }
+        // A very simple "bridge" tool
+        function _createGraph(f)
+            {
+                var y_max = 0, y_min=0;
+                var div_x = 12
+                var div_z = 12 //z is y
+                var size_x = 6
+                var size_z = 6
+
+                var vertices = []
+                var faces = []
+
+                var delta_x = size_x / (div_x)
+                var delta_z = size_z / (div_z)
+                var start_x = -(size_x / 2.0)
+                var start_z = -(size_z / 2.0)
+
+                var edgeloop_prev = [];
+                var edgeloop_cur = [];
+                var row_x, row_z;
+
+                var scale_x = 2;
+                var scale_z = 2;
+                var scale_y = 0.5;
+
+                for (row_x=0; row_x<=div_x; row_x++){
+                    edgeloop_cur = [];
+                    x = start_x + row_x * delta_x ;
+                    for ( row_z = 0 ; row_z <= div_z; row_z++ ){
+                        z = start_z + row_z * delta_z ;
+                        y = f(x,z);
+                        if (y > y_max){
+                            y_max = y;
+                        }
+                        if(y < y_min){
+                            y_min = y;
+                        }
+                        // console.log(vertices.length, x,y,z);
+                        edgeloop_cur.push(vertices.length||0);
+                        vertices.push( new THREE.Vector3(x*scale_x,y*scale_y,z*scale_z) ) ;
+                    }
+                    if (edgeloop_prev.length > 0){
+                        // console.log('faces_row')
+                        faces_row = createFaces( edgeloop_prev, edgeloop_cur );
+                        // console.log(faces_row)
+                        faces.push(...faces_row) ;
+                    }
+                    edgeloop_prev = edgeloop_cur ;
+
+                }
+
+
+                console.log("range:")
+                console.log(y_max, y_min);
+                var graphMesh = create_mesh_object( vertices, [], faces, y_max, y_min, "Z function", 'wtf')
+
+                // graphGeometry.computeFaceNormals();
+                // graphGeometry.computeVertexNormals();
+
+
+
+                // graphMesh.doubleSided = true;
+                var loader = new THREE.FontLoader();
+                loader.load( 'static/fonts/helvetiker_regular.typeface.json', function ( font ) {
+                    total = vertices.length
+                    for (var i = vertices.length - 1; i >= 0; i--) {
+                        cords = vertices[i].x+", "+vertices[i].y+", "+vertices[i].z;
+                        
+                        var textgeometry = new THREE.TextGeometry( cords, {
+                            font: font,
+                            size: 0.05,
+                            height: 0,
+                            depth: 0.1,
+                        } );
+                        textmesh = new THREE.Mesh(textgeometry);
+                        textmesh.position.set(...vertices[i].toArray())
+                        textmeshes.push(textmesh);
+                        graphMesh.add(textmesh)
+                    }
+                } );
+                return graphMesh;
+            }
+        function createFaces(vertIdx1, vertIdx2, closed=false, flipped=false){
+            var faces = []
+            // console.log(vertIdx1, vertIdx2);
+            if (! vertIdx1 || ! vertIdx2){
+                return null;
+            }
+
+            if (vertIdx1.length < 2 && vertIdx2.length < 2){
+                return null;
+            }
+
+            fan = false  ;  // what is this ?
+            if (vertIdx1.length != vertIdx2.length){
+                if (vertIdx1.length == 1 && vertIdx2.length > 1){
+                    fan = true;
+                }
+                else{
+                    return null;
+                }
+            }
+
+            var total = vertIdx2.length;
+
+
+            // Bridge the rest of the faces
+            for (var num=0;num<total-1;num++){
+                if(flipped){
+                    if (fan){
+                        var face = new THREE.Face3(vertIdx2[num], vertIdx1[0], vertIdx2[num+1] );
+                        // console.log("making face "+vertIdx2[num]+" "+ vertIdx1[0] + " " + vertIdx2[num+1] );
+                        faces.push(face) ; 
+                    }
+                    else{
+                        var face_1 = new THREE.Face3( vertIdx1[num], vertIdx1[num+1], vertIdx2[num]  )
+                        // console.log("making face "+vertIdx1[num]+" "+ vertIdx1[num+1]+ " " + vertIdx2[num]  );
+
+                        var face_2 = new THREE.Face3( vertIdx2[num+1], vertIdx2[num], vertIdx1[num+1]  )
+                        // console.log("making face "+vertIdx2[num+1]+" "+ vertIdx2[num]+ " " + vertIdx1[num+1]  );
+
+                        // console.log("making face "+vertIdx1[num]+" "+ vertIdx2[num + 1]+ " " + vertIdx1[num+1]  );
+                        faces.push(...[face_1, face_2]);
+                        // console.log("we can't do fourfaced vertices... or can we ? ");
+                    }
+                }
+                else{
+                    if ( fan ){
+                        var face = new THREE.Face3(vertIdx1[0], vertIdx2[num], vertIdx2[num+1] );
+                        // console.log("making face "+vertIdx1[0]+" "+ vertIdx2[num]+ " " + vertIdx2[num+1] );
+                        faces.push(face) ; 
+                    }
+                    else{
+                        var face_1 = new THREE.Face3( vertIdx1[num], vertIdx1[num+1], vertIdx2[num]  )
+                        // console.log("making face "+vertIdx1[num]+" "+ vertIdx1[num+1]+ " " + vertIdx2[num]  );
+
+                        var face_2 = new THREE.Face3( vertIdx2[num+1], vertIdx2[num], vertIdx1[num+1]  )
+                        // console.log("making face "+vertIdx2[num+1]+" "+ vertIdx2[num]+ " " + vertIdx1[num+1]  );
+                        faces.push(...[face_1, face_2]);
+                        // console.log("we can't do fourfaced vertices... or can we ? ");
+                    }
+                }
+            }
+            // console.log(faces);
+            return faces;
+        }
+        function make_mesh(f, max_points=10){
+            var face_color = new THREE.Color( "rgb(255,0,0)" ); 
+
+            var geometry = new THREE.Geometry();
+            vertices = [];
+            var t0 = performance.now();
+            for (var x = -max_points; x <= max_points; x=x+0.1) {
+                for (var y = -max_points; y <= max_points; y=y+0.1) {
+                    z = f(x,y);
+                    vertices.push([x,z,y]);
+
+                }   
+            }
+
+            vertices.sort( function (v_a,v_b) {
+                return v_b[1] - v_a[1]  ; // sort using the y coordinates
+            })
+
+            a = 0;
+            vertices.forEach( function (vertex, index) {
+                // console.log(vertex, index);
+                geometry.vertices.push( new THREE.Vector3(vertex[0],vertex[1],vertex[2]) );
+
+                // if (a % 2 == 0){
+                //     console.log('connecting faces : '+a+' '+(a+1)+' '+ (a+2));
+                //     // if this is the third vertex...
+                //     var face = new THREE.Face3 ( a, a+1, a+2 );
+                //     face.color = face_color;
+                //     geometry.faces.push( face );
+                // }
+
+                // a += 1;
+                }
+            );
+
+            geometry.computeBoundingBox();
+            // vertices.forEach( function ( vertex, index) {
+            //     return verte
+            // })
+
+            var t1 = performance.now();
+            console.log("f(x,y) took " + (t1 - t0) + " milliseconds.");
+            return geometry;
+    
+            // mesh = THREE.Mesh( geometry );
+            // return mesh;
+
+        }
+
+        function setup_scene(){
+            var scene = new THREE.Scene();
+            var FOV = 75;
+            var ASPECT_RATIO = window.innerWidth / window.innerHeight;
+            
+            var camera = new THREE.PerspectiveCamera( FOV, ASPECT_RATIO, 0.1, 1000)
+            // var camera = new THREE.OrthographicCamera( -100,100,100,-100, 0.1, 1000 );
+            
+            var renderer = new THREE.WebGLRenderer();
+            renderer.setSize( window.innerWidth, window.innerHeight);
+            document.body.appendChild( renderer.domElement );
+
+            // things that don't belong here...
+
+            var axesHelper = new THREE.AxesHelper( 5 );
+            scene.add( axesHelper );
+
+            var controls = new THREE.OrbitControls( camera, renderer.domElement );
+            // controls.mouseButtons.RIGHT = null;  // disable pan
+            controls.enableDamping = true ;
+            return [scene, camera, renderer, controls]
+
+        }
+
+
+        var onCameraChange = function(){
+                // console.log("camera changed " + camera.position);
+                x_axis_line.geometry.vertices[1].x = camera.position.x;
+                y_axis_line.geometry.vertices[1].y = camera.position.y;
+                z_axis_line.geometry.vertices[1].z = camera.position.z;
+
+                x_axis_line.geometry.verticesNeedUpdate = true;
+                y_axis_line.geometry.verticesNeedUpdate = true;
+                z_axis_line.geometry.verticesNeedUpdate = true;
+
+
+        }
+
+
+        var [scene, camera, renderer, controls] = setup_scene();
+
+        controls.addEventListener("change", onCameraChange);
+
+        var [x_axis_line, y_axis_line, z_axis_line] = axes_lines();
+        var cube = make_cube();
+
+
+        var uniforms = {
+            colorB: {type: 'vec3', value: new THREE.Color(0xACB6E5)},
+            colorA: {type: 'vec3', value: new THREE.Color(0x74ebd5)}
+         }
+        camera.position.set(5, 5, 5);
+        camera.lookAt( 0, 0, 0 );
+
+        var graphMeshes = createGraph([f]);
+        for (var i = graphMeshes.length - 1; i >= 0; i--) {
+            scene.add( graphMeshes[i] );
+        }
+
+        scene.add( x_axis_line );
+        scene.add( y_axis_line );
+        scene.add( z_axis_line );
+
+        // scene.add( make_mesh() );
+        // scene.add( cube );
+
+        var a = 0;
+
+        var previous_position = camera.position;
+        function animate(){
+            if (
+                (
+                    (camera.position.x - previous_position.x) > 1
+                ) ||
+                (
+                    (camera.position.y - previous_position.y) > 1
+                ) ||
+                (
+                    (camera.position.z - previous_position.z) > 1
+                )||true
+            ){
+            }
+            requestAnimationFrame( animate );
+            controls.update();
+            renderer.render( scene, camera );
+
+        }
+        animate();
+    function vertexFaceNumbersHelper( mesh, mode, size, color ) {
+
+        //  mode: 0 nothing, 1 vertex, 2 face, 3 vertex & face
+        
+        var verticesCount;
+        var facesCount;
+         
+        var vertexNumbers = [];
+        var faceNumbers = [];
+        var materialDigits = new THREE.LineBasicMaterial( { color: color } );
+        var geometryDigit = [];
+        var digit = [];
+        var d100, d10, d1;      // digits
+        var coordDigit = [];    // design of the digits
+        
+        var digitPositions = [];
+        
+        function numbering() { 
+                    
+            i1 ++;                                                      // starts with  -1 + 1 = 0
+            
+            if ( i1   === 10 ) {i1   = 0; i10 ++ }
+            if ( i10  === 10 ) {i10  = 0; i100 ++ }
+            if ( i100 === 10 ) {i100 = 0 }                              // hundreds (reset when overflow)
+            
+            if ( i100 > 0 ) {
+                
+                d100 = digit[ i100 ].clone();                           // digit for hundreds
+                board.add( d100 );                                      // on the board ...
+                d100.position.x = -8 * 0.1 * size;                      // ... move slightly to the left
+                
+            }
+            
+            if ( ( i100 > 0 ) || ( ( i100 === 0 ) && ( i10 > 0 ) ) ) {  // no preceding zeros tens
+                
+                d10 = digit[ i10 ].clone();                             // digit for tenth
+                board.add( d10 );                                       // on the board
+                
+            }
+            
+            d1 =   digit[ i1 ].clone();                                 // digit 
+            board.add( d1 );                                            //  on the board ...
+            d1.position.x = 8 * 0.1 * size;                             // ... move slightly to the right
+                        
+        }
+        
+        coordDigit[ 0 ] = [ 0,0, 0,9, 6,9, 6,0, 0,0 ];
+        coordDigit[ 1 ] = [ 0,6, 3,9, 3,0 ];
+        coordDigit[ 2 ] = [ 0,9, 6,9, 6,6, 0,0, 6,0 ];
+        coordDigit[ 3 ] = [ 0,9, 6,9, 6,5, 3,5, 6,5, 6,0, 0,0 ];
+        coordDigit[ 4 ] = [ 0,9, 0,5, 6,5, 3,5, 3,6, 3,0 ];
+        coordDigit[ 5 ] = [ 6,9, 0,9, 0,5, 6,5, 6,0, 0,0 ];
+        coordDigit[ 6 ] = [ 6,9, 0,9, 0,0, 6,0, 6,5, 0,5 ];
+        coordDigit[ 7 ] = [ 0,9, 6,9, 6,6, 0,0 ];
+        coordDigit[ 8 ] = [ 0,0, 0,9, 6,9, 6,5, 0,5, 6,5, 6,0, 0,0 ];
+        coordDigit[ 9 ] = [ 6,5, 0,5, 0,9, 6,9, 6,0, 0,0 ];
+        
+        if ( mesh.geometry.isGeometry) {
+            
+            if ( mode === 1 || mode === 3 ) {
+            
+                verticesCount = mesh.geometry.vertices.length;
+                
+            }
+            
+            if ( mode === 2 || mode === 3 ) {
+            
+                facesCount = mesh.geometry.faces.length ;
+                
+            }
+                
+            for ( var i = 0; i<10; i ++ ) {
+                
+                geometryDigit[ i ]  = new THREE.Geometry();
+                
+                for ( var j = 0; j < coordDigit[ i ].length/ 2; j ++ ) {
+                    
+                    geometryDigit[ i ].vertices.push( new THREE.Vector3( 0.1 * size * coordDigit[ i ][ 2 * j ], 0.1 * size * coordDigit[ i ][ 2 * j + 1 ], 0 ) );
+                    
+                }
+                
+                digit[ i ] = new THREE.Line( geometryDigit[ i ], materialDigits );
+                
+            }
+            
+            if ( mode === 1 || mode === 3 ) {
+            
+                var i100 =  0;
+                var i10  =  0;
+                var i1   = -1;
+                
+                for ( var i = 0; i < verticesCount ; i ++ ) {
+                
+                    // Number on board, up to three digits are pinned there
+        
+                    var board = new THREE.Mesh( new THREE.Geometry() );
+                        
+                    numbering(); // numbering the vertices, hundreds ...
+                        
+                    vertexNumbers.push( board );    // place the table in the vertex numbering data field
+                    mesh.add( vertexNumbers[ i ] ); 
+                    
+                }
+                
+            }
+            
+            if ( mode === 2 || mode === 3 ) {
+            
+                var i100 =  0;
+                var i10  =  0;
+                var i1   = -1;
+                
+                for ( var i = 0; i < facesCount ; i ++ ) {
+                
+                    // Number on board, up to three digits are pinned there
+                    
+                    var board = new THREE.Mesh( new THREE.Geometry() );
+                    
+                    numbering(); // numbering the facesces, hundreds ...
+                        
+                    faceNumbers.push( board );  // place the table in the face numbering data field
+                    mesh.add( faceNumbers[ i ] );   
+                    
+                }
+                
+            }
+                    
+        }
+        
+        // update helper
+        
+        this.update = function ( mode ) {
+        
+            var x, y, z;
+            
+            // Geometry
+            
+            if ( mesh.geometry.isGeometry ) {
+            
+                if ( mode === 1 || mode === 3 ) {
+                                        
+                    for( var n = 0; n < vertexNumbers.length; n ++ ) {
+                        
+                        vertexNumbers[ n ].position.set( mesh.geometry.vertices[ n ].x, mesh.geometry.vertices[ n ].y, mesh.geometry.vertices[ n ].z ); 
+                        vertexNumbers[ n ].quaternion.copy(camera.quaternion);
+                        
+                    }
+                    
+                }
+                
+                if ( mode === 2 || mode === 3 ) {
+                    
+                    for( var n = 0; n < faceNumbers.length; n ++ ) {
+                        
+                        x = 0;
+                        x += mesh.geometry.vertices[ mesh.geometry.faces[ n ].a ].x;
+                        x += mesh.geometry.vertices[ mesh.geometry.faces[ n ].b ].x; 
+                        x += mesh.geometry.vertices[ mesh.geometry.faces[ n ].c ].x;
+                        x /= 3;
+                        
+                        y = 0;
+                        y += mesh.geometry.vertices[ mesh.geometry.faces[ n ].a ].y;
+                        y += mesh.geometry.vertices[ mesh.geometry.faces[ n ].b ].y;
+                        y += mesh.geometry.vertices[ mesh.geometry.faces[ n ].c ].y;
+                        y /= 3;
+                        
+                        z = 0;
+                        z += mesh.geometry.vertices[ mesh.geometry.faces[ n ].a ].z;
+                        z += mesh.geometry.vertices[ mesh.geometry.faces[ n ].b ].z;
+                        z += mesh.geometry.vertices[ mesh.geometry.faces[ n ].c ].z;
+                        z /= 3;
+                        
+                        faceNumbers[ n ].position.set( x, y, z );
+                        faceNumbers[ n ].quaternion.copy(camera.quaternion);
+                    
+                    }
+                    
+                }
+                            
+            }
+            
+        }
+        
+    }
+    </script>
+<!--
+    {% for eq in equations.values %}
+        <h1> {{eq}}</h1> <br />
+    {%endfor%}
+-->
+
+
+{% endblock %}

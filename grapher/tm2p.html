@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index - Home</title>
+    <link href="/Content/Feedback?ver=v12122019" rel="stylesheet" type="text/css" media="screen" />
+    <link href="/Content/Print?ver=v12122019" rel="stylesheet" type="text/css" media="print" />
+    <link href="/bundles/Bootstrap4CSS?v=mWG-0SuiZZsiz0sy_7hQsykTKBJWM9SEzlrBhraaSVg1" rel="stylesheet"/>
+
+    <link href="/Content/css?v=RPRMrOvfZldWVRKL0YmwSbHlPJJV19IibFfAclbrXHI1" rel="stylesheet"/>
+
+    <link href="/bundles/ToastrCSS?v=xM2k-XzbntCIBvtujkSstfCtB_D9UPJK-crl3PRV_PA1" rel="stylesheet"/>
+
+
+
+    <script src="/bundles/modernizr?v=inCVuEFe6J4Q07A0AcRsbJic_UE5MwpRMNGcOtk94TE1"></script>
+
+    <script src="/bundles/jquery?v=8Oos0avDZyPg-cbyVzvkIfERIE1DGSe3sRQdCSYrgEQ1"></script>
+
+    <script src="/bundles/Bootstrap4?v=zIHjs4uVWdUgGmkeH3gNlvsNrQKWnEBbSeCf2M7VU1Y1"></script>
+
+    <script src="/bundles/welcomepage?v=OpnO_Oode51G5QLrZSbK49uCsh0qSK6yMvczxCSY0Ec1"></script>
+
+    <script src="/bundles/GetNotifications?v=ldvW8Xv3K3qXP6yx8xoGL5C7hVB_erfyUS_jgyci2ys1"></script>
+
+    <script src="/bundles/Toastr?v=TD0A3dKJeXIO_A-cX96xmyysMOiGlN6Smsn1zv1s-F81"></script>
+
+    <script src="/bundles/googleanalytics?v=w_aJDj2mLCdESN3cPyWX-yuPJa-g78hwmSfn2a8PYjA1"></script>
+
+
+    
+
+</head>
+<body class="">
+
+
+    <div id="overlay" class="overlay">
+        
+
+
+
+
+<menu id="MenuContainer" class="menucontainer">
+
+
+    
+    <ul id="1_menu" tabindex="-1">
+
+        <li class="menu_top">
+            <a id="GlobalMenu" href="#" class="drop menu_text" onclick="dropDownClick(this);" onblur="dropDownHide(this)">
+                <img class="globalmenu_image" src="/Images/icon_menu.png" />
+                    <span class="menu_text">&nbsp;MENU&nbsp;
+                <img class="globalmenu_dropdown" src="/Images/expand_down_grey.png" /></span>
+            </a>
+            <div id="GlobalDropdown" class="drop_child mega_hidden mega dropdown_4columns" >
+                
+                <div class="seaweb_wrapper" style="">
+                    <input id="ac-1" name="accordion-1" type="checkbox" />
+                    <label class="labellevel1" for="ac-1">Sea-Web</label>
+                    <article class="ac-level1">
+                        <div class="col_Header_3"><h2>Sea-web</h2></div>
+                        <div class="col_1">
+                            
+                            <div id="1_col_1_inactive" class="inactive">
+                                <div id="1_dcShips" class="drop_container section_Ships">
+                                    <input id='aac-1' name='accordion-1' type='checkbox' />
+                                    <label class='labellevel2' for='aac-1'>Ships</label>
+                                    <article class='ac-level2'>
+                                        <a href='https://www.ihs.com/products/sea-web-vessel-search.html'>
+                                            <h3>Ships</h3>
+                                            <p class='menuitem_compactonly'>
+                                                Search 200,000+ ships<br />
+                                            </p>
+                                            <p class="p_inactive">
+                                                Search 200,000+ ships<br />
+                                            </p>
+                                        </a>
+                                    </article>
+                                </div>
+                                <div id="1_dcCompanies" class="drop_container section_Owners">
+                                    <input id='aac-2' name='accordion-2' type='checkbox' />
+                                    <label class='labellevel2' for='aac-2'>Owners</label>
+                                    <article class='ac-level2'>
+                                        <a href='https://www.ihs.com/products/sea-web-companies.html'>
+                                            <h3>Owners</h3>
+                                            <p class='menuitem_compactonly'>
+                                                Fleet Ownership Database<br />
+                                            </p>
+                                            <p class="p_inactive">
+                                                Fleet Ownership Database<br />
+                                            </p>
+                                        </a>
+                                    </article>
+                                </div>
+                                <div id="1_dcMovements" class="drop_container section_Movements">
+                                    <input id='aac-4' name='accordion-4' type='checkbox' />
+                                    <label class='labellevel2' for='aac-4'>Movements</label>
+                                    <article class='ac-level2'>
+                                        <a href='https://www.ihs.com/products/sea-web-vessel-movements.html'>
+                                            <h3>Movements</h3>
+                                            <p class='menuitem_compactonly'>
+                                                Port Callings &amp; Ship Positions<br />
+                                                Distance Tables<br />
+                                            </p>
+                                            <p class="p_inactive">
+                                                Port Callings &amp; Ship Positions<br />
+                                                Distance Tables<br />
+                                            </p>
+                                        </a>
+                                    </article>
+                                </div>
+                                <div id="1_dcBuilders" class="drop_container section_Builders">
+                                    <input id='aac-5' name='accordion-5' type='checkbox' />
+                                    <label class='labellevel2' for='aac-5'>Ships Builders</label>
+                                    <article class='ac-level2'>
+                                        <a href='https://www.ihs.com/products/sea-web-ship-builders.html'>
+                                            <h3>Ship Builders</h3>
+                                            <p class='menuitem_compactonly'>
+                                                Builder Details &amp; Orderbook<br />
+                                            </p>
+                                            <p class="p_inactive">
+                                                Builder Details &amp; Orderbook<br />
+                                            </p>
+                                        </a>
+                                    </article>
+                                </div>
+                                <div id="1_dcPorts" class="drop_container section_Ports">
+                                    <input id='aac-6' name='accordion-6' type='checkbox' />
+                                    <label class='labellevel2' for='aac-6'>Ports</label>
+                                    <article class='ac-level2'>
+                                        <a href='https://www.ihs.com/products/sea-web-port-news-conditions.html'>
+                                            <h3>Ports</h3>
+                                            <p class='menuitem_compactonly'>
+                                                Search Ports &amp; Terminals<br />
+                                            </p>
+                                            <p class="p_inactive">
+                                                Search Ports &amp; Terminals<br />
+                                            </p>
+                                        </a>
+                                    </article>
+                                </div>
+                                     <div id="1_dcEvents" class="drop_container">
+                                    <input id='aac-9' name='accordion-9' type='checkbox' />
+                                    <label class='labellevel2' for='aac-9'>Events</label>
+                                    <article class='ac-level2'>
+                                        <a href='https://www.ihs.com/products/sea-web-vessel-casualty-risk.html'>
+                                                <h3>Events</h3>
+                                            <p class='menuitem_compactonly'>
+                                                Events Database<br />
+                                            </p>
+                                            <p class="p_inactive">
+                                                Events Database<br />
+                                            </p>
+                                        </a>
+                                    </article>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col_1">
+                            
+                            <div id="1_col_2_inactive" class="inactive">
+                                <div id="1_dcShipPerformance" class="drop_container">
+                                    <input id='aac-10' name='accordion-10' type='checkbox' />
+                                    <label class='labellevel2' for='aac-10'>Ship Performance</label>
+                                    <article class="ac-level2">
+                                        <a href='https://www.ihs.com/products/sea-web-ship-performance.html'>
+                                            <h3>Ship Performance</h3>
+                                            <p class='menuitem_compactonly'>
+                                                Benchmarking &amp; Analysis<br />
+                                            </p>
+                                            <p class="p_inactive">
+                                                Benchmarking &amp; Analysis<br />
+                                            </p>
+                                        </a>
+                                    </article>
+                                </div>
+                                <div id="1_dcCountries" class="drop_container">
+                                    <input id='aac-11' name='accordion-11' type='checkbox' />
+                                    <label class='labellevel2' for='aac-11'>Countries</label>
+                                    <article class="ac-level2">
+                                        <a href='https://www.ihs.com/products/sea-web-maritime-risk-security.html'>
+                                            <h3>Countries</h3>
+                                            <p class='menuitem_compactonly'>
+                                                Country Risk &amp; Port Lists<br />
+                                            </p>
+                                            <p class="p_inactive">
+                                                Country Risk &amp; Port Lists<br />
+                                            </p>
+                                        </a>
+                                    </article>
+                                </div>
+                                <div id="1_dcFixtures" class="drop_container">
+                                    <input id='aac-12' name='accordion-12' type='checkbox' />
+                                    <label class='labellevel2' for='aac-12'>Fixtures</label>
+                                    <article class="ac-level2">
+                                        <a href='https://www.ihs.com/products/sea-web-charter-market-fixtures.html'>
+                                            <h3>Fixtures</h3>
+                                            <p class='menuitem_compactonly'>
+                                                Dry &amp; Wet Vessel Fixtures<br />
+                                            </p>
+                                            <p class="p_inactive">Dry &amp; Wet Vessel Fixtures<br />
+                                            </p>
+                                        </a>
+                                    </article>
+                                </div>
+                                <div id="1_dcDirectory" class="drop_container">
+                                    <input id='aac-13' name='accordion-13' type='checkbox' />
+                                    <label class='labellevel2' for='aac-13'>Company Directory</label>
+                                    <article class="ac-level2">
+                                            <a href='https://www.ihs.com/products/sea-web-world-shipping-directory.html'>
+                                        <h3>Company Directory</h3>
+                                        <p class='menuitem_compactonly'>
+                                            Maritime Companies Database<br />
+                                        </p>
+                                        <p class="p_inactive">Maritime Companies Database<br />
+                                        </p>
+                                        </a>
+                                    </article>
+                                </div>
+                                <div id="1_dcSecurity" class="drop_container">
+                                    <input id='aac-14' name='accordion-14' type='checkbox' />
+                                    <label class='labellevel2' for='aac-14'>Security</label>
+                                    <article class="ac-level2">
+                                        <a href='https://www.ihs.com/products/sea-web-maritime-risk-security.html'>
+                                            <h3>Security</h3>
+                                        <p class='menuitem_compactonly'>
+                                            Security &amp; Risk Updates<br />
+                                        </p>
+                                        <p class="p_inactive">Security &amp; Risk Updates<br />
+                                        </p>
+                                        </a>
+                                    </article>
+                                </div>
+                                <a href='https://www.ihs.com/products/sea-web-ship-company-watchlist.html'>
+                                <div id="1_dcWatchlistShips" class="drop_container">
+                                    <input id='aac-15' name='accordion-15' type='checkbox' />
+                                    <label class='labellevel2' for='aac-15'>My Ships Watchlist</label>
+                                    <article class="ac-level2">
+                                    <h3 class="inactive">My Ships <span class="nocaps">Watchlist</span></h3>
+                                        
+                                        <p class='menuitem_compactonly'>
+                                        Fleet/Ships Alert Service<br />
+                                    </p>
+                                    <p class="p_inactive">Fleet/Ships Alert Service<br />
+                                    </p>
+                                    </article>
+                                </div>
+                                <div id="1_dcWatchlistCompanies" class="drop_container inactive">
+                                    <input id='aac-16' name='accordion-16' type='checkbox' />
+                                    <label class='labellevel2' for='aac-16'>My Companies Watchlist</label>
+                                    <article class="ac-level2">
+                                    <h3>My Companies <span class="nocaps">Watchlist</span></h3>
+                                    <p class='menuitem_compactonly'>
+                                        Company Alert Service<br />
+                                    </p>
+                                    <p class="p_inactive">Company Alert Service<br />
+                                    </p>
+                                    </article>
+                                </div>
+                                    </a>
+                            </div>
+                        </div>
+                        <div class="col_1">
+                            
+                            <div id="1_col_3_inactive" class="inactive" style="width:0;background-color:red;">
+
+                        </div>
+                        </div>
+
+                    </article>
+                </div>
+                <div class="aislive_wrapper">
+                    <div class="col_1">
+                        <div class="drop_container">
+                            <input id="ac-2" name="accordion-1" type="checkbox" />
+                            <label class="labellevel1" for="ac-2">AISLive</label>
+                            <article class="ac-level1">
+                                <h2>AISLive</h2>
+                                
+                                        <h3 class="inactive"><a href='https://www.ihs.com/products/ais-live-ship-tracker.html'>AISLive Ship Tracking</a></h3>
+                                        <p class="inactive">
+                                            <a  href='https://www.ihs.com/products/ais-live-ship-tracker.html'>Station Hosts Area</a>
+                                        </p>
+                                
+
+
+
+                                <div class="headspacer"></div>
+                            </article>
+                        </div>
+                            <div class="drop_container">
+                            <input id="ac-11" name="accordion-1" type="checkbox" />
+                            <label class="labellevel1" for="ac-11">WatchLists & Alerts</label>
+                            <article class="ac-level1">
+                                <h2>WatchLists & Alerts</h2>
+                                
+                                    <h3 class="inactive"><a href='https://www.ihs.com/products/ais-live-ship-tracker.html'>Notifications Timeline</a></h3>
+                                    <p class="inactive"><a  href='https://www.ihs.com/products/ais-live-ship-tracker.html'>WatchLists &amp; Alerts Management</a></p>
+                                
+
+
+
+                                <div class="headspacer"></div>
+                            </article>
+                        </div>
+                        <div class="drop_container">
+                            <input id="ac-4" name="accordion-1" type="checkbox" />
+                            <label class="labellevel1" for="ac-4">Forecasts</label>
+                            <article class="ac-level1">
+                                <h2>Forecasts</h2>
+                                  
+                                <a href='https://www.ihs.com/products/fleet-capacity-forecast.html'>
+                                    <h3 class="inactive">Fleet Capacity Forecast</h3>
+                                </a>
+                                
+                                <div class="headspacer"></div>
+                            </article>
+                        </div>
+                    </div>
+                </div>
+                <div class="col_1">
+                    <div class="drop_container">
+                        <input id="ac-6" name="accordion-1" type="checkbox" />
+                        <label class="labellevel1" for="ac-6">Data Solutions</label>
+                        <article class="ac-level1">
+                            <h2>Bespoke Solutions</h2>
+                            <div class="headspacer"></div>
+                            <p>
+                                <a target="_blank" href="https://www.ihs.com/products/maritime-data-index.html">Maritime Data Solutions</a>&nbsp;<img src='/Images/icon_external.png'/><br />
+                                <a target="_blank" href="https://www.ihs.com/products/maritime-ships-expected-tracking.html">Ships Expected</a>&nbsp;<img src='/Images/icon_external.png'/><br />
+                                <a target="_blank" href="https://www.ihs.com/products/maritime-vessel-movement-services.html">Vessel Movement Service</a>&nbsp;<img src='/Images/icon_external.png'/><br />
+                            </p>
+                            <div class="headspacer"></div>
+                        </article>
+                    </div>
+                    <div class="drop_container">
+                        <input id="ac-7" name="accordion-1" type="checkbox" />
+                        <label class="labellevel1" for="ac-7">Statistical Reports</label>
+                        <article class="ac-level1">
+                            <h2>Statistical Reports</h2>
+                            <div class="headspacer"></div>
+                            <p>
+                                <a target="_blank" href="https://www.ihs.com/products/maritime-world-shipbuilding-statistics.html">World Shipbuilding Statistics</a>&nbsp;<img src='/Images/icon_external.png'/><br />
+                                <a target="_blank" href="https://www.ihs.com/products/maritime-world-fleet-statistics.html">World Fleet Statistics</a>&nbsp;<img src='/Images/icon_external.png'/><br />
+                                <a target="_blank" href="https://www.ihs.com/products/maritime-world-casualty-statistics.html">World Casualty Statistics</a>&nbsp;<img src='/Images/icon_external.png'/><br />
+                            </p>
+                            <div class="headspacer"></div>
+                        </article>
+                    </div>
+                    <div class="drop_container">
+                        <input id="ac-8" name="accordion-1" type="checkbox" />
+                        <label class="labellevel1" for="ac-8">Trade Intelligence</label>
+                        <article class="ac-level1">
+                            <h2>Trade Solutions</h2>
+                            <div class="headspacer"></div>
+                            <p>
+                                <a target="_blank" href="https://www.ihs.com/products/maritime-global-trade-atlas.html">Global Trade Atlas</a>&nbsp;<img src='/Images/icon_external.png'/><br />
+                                <a target="_blank" href="https://www.ihs.com/products/piers.html">PIERS</a>&nbsp;<img src='/Images/icon_external.png'/><br />
+                                <a target="_blank" href="http://www.ihs.com/products/global-insight/industry/commerce-transport/world-trade.aspx">World Trade Service</a>&nbsp;<img src='/Images/icon_external.png'/><br />
+                            </p>
+                            <div class="headspacer"></div>
+                        </article>
+                    </div>
+                    <div class="drop_container">
+                        <input id="ac-9" name="accordion-1" type="checkbox" />
+                        <label class="labellevel1" for="ac-9">About Us</label>
+                        <article class="ac-level1">
+                            <h2>About Us</h2>
+                            <div class="headspacer"></div>
+                            <p>
+                                <a href='https://www.ihs.com/products/maritime-trade-solutions.html'>About IHS Maritime &amp; Trade</a><br />
+                                <a href='https://www.ihs.com/products/maritime-ship-tracker-ais-live-ship-data-seaweb.html'>Subscription Plans</a><br />
+                                <a href="https://www.ihs.com/about/contact-us.html" target="_blank">Contact Us</a>
+                            </p>
+                        </article>
+                    </div>
+                        
+                </div>
+
+            </div><!-- End 2 columns container -->
+        </li>
+        <li class="menu_top">
+            <a href="https://www.ihs.com" style="text-decoration:none;"><span class="global_image"><img src="/Images/IHSGlobal/IHSM_Logo_55.png"/></span></a></li>
+     
+        <li class="menu_top"><span class="menu_text"><span class="globalmenu_text">Maritime Portal</span></span></li>
+    </ul>
+
+    
+
+    <ul class="mirsmenu">
+         
+            <li class="menu_top"><span class="sitemenu_title"><label id="1_Arealabel" class="arealabel">Home</label></span></li>
+        
+    </ul>
+
+    <div id="right_menu_wrapper">
+
+        <ul id="menu_local" class="menu_local">
+            
+        
+                <li class="menu_top menu_right highlightlogin"><a class="nodrop" href="/Account2/Index"><img class="menu_image" title="Log In" src="/Images/icon_user_menu.png" /><span class="menu_text">&nbsp;Log In</span></a></li>
+                <li class="menu_top menu_right">
+                    <a class="nodrop" href="http://www.ihsmarkit.com/aispartners"><img class="menu_image" src="/Images/icon_antenna.png" /><span class="menu_text">&nbsp;Cover Your Area</span></a>
+                </li>
+                <li class="menu_top menu_right">
+                    <a class="nodrop" href="/EntitlementPortal/Home/Information/Help_Centre"><img class="menu_image" src="/Images/icon_help_menu.png" /><span class="menu_text">&nbsp;Help</span></a>
+                </li>
+                <li class="menu_top menu_right">
+                    <a class="nodrop" href="/Home/Index"><img class="menu_image" src="/Images/icon_home.png" /><span class="menu_text">&nbsp;My Home</span></a>
+
+                </li>
+            
+
+        </ul>
+
+    </div>
+
+    <script>
+        //important for accessing the language.asmx file from javascript
+        var baseUrl = "/";
+        var siteUrl = "https://maritime.ihs.com";
+        $('.drop_child').hover(
+            function () {
+                $(this).toggleClass('is-hover');
+
+            }
+        );
+
+
+        //$('#GlobalMenu').keydown(function(e) {
+
+        //    //get the active item
+        //    var $actvOpt = $("#GlobalDropdown p[class*='active_banana']");
+
+        //    if (e.which === 13) { //enter key
+        //        if ($actvOpt.length !== 0) {
+        //            //toastr.success("bob2");
+        //            //$($actvOpt)[0].click();
+        //            window.location = $actvOpt.attr('href');
+        //        }
+        //        return;
+        //    }
+        //    var optCount = $("#GlobalDropdown p").length;
+
+
+
+        //    var actvIndex = $actvOpt.removeClass('active_banana').index() -1;
+
+
+
+
+        //    if (e.which === 40) { //keydown
+        //        actvIndex += 1;
+        //    } else if (e.which === 38) { //keydown
+        //        actvIndex -= 1;
+        //    }
+
+        //    if (actvIndex < 0) {
+        //         actvIndex = optCount - 1;
+        //    }
+        //    else if (actvIndex >= optCount) {
+        //        actvIndex = 0;
+        //    }
+
+
+        //    $('#GlobalDropdown p:eq(' + actvIndex + ')').addClass('active_banana');
+        //    $actvOpt = $("'#GlobalDropdown p[class*='active_banana']");
+        //    $(this).val($actvOpt.text());   
+
+        //});
+
+
+
+
+
+        //capture the click and if its not in the dropdowns, make sure they are hidden
+        $(document).mouseup(function (e) {
+            if ($(e.target).parent()[0] !== undefined) {
+                if ($(e.target).parent()[0].id != "GlobalMenu" || $(e.target).parent()[0].id != "MirsGlobalMenu") {
+                    var container = $('.drop_child');
+                    if (!container.is(e.target) && container.has(e.target).length === 0) {
+                        container.addClass('mega_hidden');
+                    }
+                }
+            }
+        });
+
+        function dropDownClick(args) {
+            var x = document.getElementById(args.id);
+            var $block = $(x).parent().children('.drop_child');
+            $('.drop_child').not($block).addClass('mega_hidden');
+            $(x).toggleClass('drop_selected');
+            $block.toggleClass('mega_hidden');
+            return false;
+        }
+
+        function dropDownHide(args) {
+
+            var x = document.getElementById(args.id);
+            var $block = $(x).parent().children('.drop_child');
+            if ($($block).hasClass('is-hover')) {
+            }
+            else {
+                $('.drop_child').addClass('mega_hidden');
+            }
+            $('.drop').removeClass('drop_selected');
+
+        }
+
+        function dropDownLocalClick(dropdown) {
+            if ($(dropdown).is(':visible')) {
+                $(dropdown).hide();
+            }
+            else {
+                $(dropdown).css('display', 'block');
+                $(dropdown).show();
+            }
+        }
+
+        function dropDownLocalHide(dropdown) {
+            if ($(dropdown).is(':visible')) {
+                $(dropdown).hide();
+            }
+        }
+
+
+
+        function secondary_toggle(id, e) {
+            if ($(id).is(':visible')) {
+                $(id).hide();
+            }
+            else {
+
+                $(id).css('display', 'block');
+                $(id).removeClass('mega_hidden');
+                $(id).show();
+                //colse other drops in mega menu
+                $('.drop').removeClass('drop_selected');
+                e.stopPropagation();
+
+            }
+        }
+        function secondary_hide(id, e) {
+            if ($(id).hasClass('is-hover')) {
+                //done to allow element to be hidden AFTER the hyperlink has actioned.
+                setTimeout(function () { $(id).hide(); }, 1000);
+            }
+            else if ($(id).is(':visible')) {
+                $(id).hide();
+            }
+
+        }
+
+        function printReport() {
+
+            var iframe = document.getElementById('reportout');
+            if (iframe != null) {
+                document.body.removeChild(iframe);
+            }
+            iframe = document.createElement("iframe");
+            iframe.setAttribute("id", "reportout");
+            iframe.style.width = 0 + "px";
+            iframe.style.height = 0 + "px";
+            document.body.appendChild(iframe);
+            //document.getElementById('reportout').contentWindow.location = '/api/ReportsApi/GetAuditReport';
+            document.getElementById('reportout').contentWindow.location = '/UserControls/ReportAudit.aspx';
+        }
+
+        $(document).ready(function () {
+
+            var notificationClass = new Thetis.CheckNotifications.CheckForNotificationsCl();
+
+        });
+
+    </script>
+
+</menu>
+<div class="mirsmenutrim"></div>
+        
+
+
+    
+
+
+        <div class="Absolute-Center body-content">
+
+<div id="BroadcastMessage" style="width:100%;border:1px solid #777777;clear:both;margin-bottom:10px;background-color:#fff;display:none;">
+	<div style="font-weight:bold;font-size:15px;text-align:center;margin:5px;">
+		<span id="1_lblMessage"></span>
+
+	</div>
+</div>
+
+            
+
+
+
+
+
+
+<script src="https://www.google.com/recaptcha/api.js"></script>
+
+<article class="tilecontainer  Absolute-Center top_center">
+    <section class="tilecontainer_inner Absolute-Center">
+        <section class="tilecol logintile">
+            <section class="tile_login type_login_Main">
+                <h1>Customer Login</h1>
+<form action="/Account2/Index?ReturnUrl=%2FAreas%2FSeaweb%2Fauthenticated%2Fauthenticated_handler.aspx%3Fcontrol%3Dshipovw%26LRNO%3D9796793" method="post">                    <span class="login_validation"></span>
+                <p class="tile_p">
+                    <span class="login_label"><label for="Username">Username</label></span>
+                    <span class="login_text"><input data-val="true" data-val-required="The Username field is required." id="Username" name="Username" type="text" value="" /></span>
+                    <span class="login_label"><label for="Password">Password</label></span>
+                    <span class="login_text"><input data-val="true" data-val-required="The Password field is required." id="Password" name="Password" type="password" /></span>
+                    <span class="login_check"><input data-val="true" data-val-required="The Remember Me field is required." id="RememberMe" name="RememberMe" type="checkbox" value="true" /><input name="RememberMe" type="hidden" value="false" /></span>
+                    <span class="login_checklabel"><label for="RememberMe">Remember Me</label></span>
+                        <br />
+                    <input type="hidden" name="AttemptsToLogin" value="1" />
+                    <input class="primarybutton largebutton" data-sitekey="6Lf7_zEUAAAAAL0Q8-VgZvzC5sm4g440DzoXzFXA" id="btnLogInIdx" type="submit" onclick="" value="Log In" />
+                </p>
+                        <p class=" tile_p loglinks">
+                            By clicking "Log In" you are agreeing to the terms and&nbsp;
+                            <a class="login_link" href="/EntitlementPortal/Home/Information/Licence_Agreement">Licence Agreement</a><br />
+                            <a class="login_link" href="/Account2/UsernameHelp">Username/Password Help</a>
+                        </p>
+</form>
+            </section>
+        </section>
+        <section class="tilecol evaltile">
+            <section class="tile_login type_login">
+                <a class="tile_link" href="https://ihsmarkit.com/forms/contactinformation.html?efid=DNEk6rA52iP4oWiIJU9gdQ==">
+                    <h1>Product Trial</h1>
+                    <p class="tile_p">
+                        Not a subscriber?
+                        <br/>
+                        Click here to request a no-risk trial
+                    </p>
+                </a>
+            </section>
+        </section>
+        <section class="tilecol abouttile">
+            <section class="tile_login type_login type_non_mirs">
+                <a class="tile_link" href="https://www.ihsmarkit.com/aispartners">
+                    <h1>AIS Antenna Network Partnerships</h1>
+                    <p class="tile_p pmirs">
+                        As part of IHS Markit’s continuing AIS network expansion we are looking to work with reliable partners in coastal locations around the globe.
+                        <br /><br />
+                        Learn more about covering your area and partnership benefits.
+                    </p>
+                </a>
+            </section>
+            <section class="tile_login  type_mirs">
+                <a class="tile_link" href="https://www.ihs.com/products/Maritime-intelligence-risk-suite.html">
+                    <h1>Not a subscriber?</h1>
+                    <p class="tile_p pmirs">
+                        If you are not currently a subscriber a product trial is available for you to evaluate the IHS Maritime Insurance Risk Suite
+                        <br /><br />
+                        <span>Click here to register your interest</span>
+                    </p>
+                </a>
+            </section>
+        </section>
+    </section>
+</article>
+
+<script>
+    var isSubmitted = false;
+    $("#btnLogInIdx").click(function () {
+        if (!isSubmitted) {
+            isSubmitted = true;
+        } else {
+            $("input:submit").attr("disabled", true);
+        }
+    });
+</script>
+        </div>
+
+
+    <footer id="globalFooter" class="globalfooter">
+        <p>
+            <div class="globalFooterText"><a href='/EntitlementPortal/Home/Information/Cookies'><span class="FullText">Cookies</span><span class="ShortText">Cookies</span></a>
+            </div><div class="globalFooterText"><a href='https://www.ihs.com/products/maritime-trade-solutions.html'><span class="FullText">About</span><span class="ShortText">About</span></a>
+            </div><div class="globalFooterText"><a href="https://www.ihs.com/about/contact-us.html" target="_blank"><span class="FullText">Contact Us</span><span class="ShortText">Contact</span></a>
+            </div><div class="globalFooterText"><a href='/EntitlementPortal/Home/Information/Privacy_Policy'><span class="FullText">Privacy Policy</span><span class="ShortText">Privacy</span></a>
+            </div><div class="globalFooterText"><a href='/EntitlementPortal/Home/Information/Licence_Agreement'><span class="FullText">Licence Agreement</span><span class="ShortText">Licence</span></a>
+            </div><div class="globalFooterText"><a href='/EntitlementPortal/Home/Information/Terms_Of_Use'><span class="FullText">Terms of Use</span><span class="ShortText">Terms</span></a>
+            </div>
+</p><p>       
+            
+            <span class="globalFooterText">
+                <span class="FullText">
+                    Copyright © IHS Global Limited 
+                    <script type="text/javascript"> 
+                        <!--
+                        var year = new Date().getFullYear()
+                        document.write(year) 
+                        //-->
+                    </script>, All Rights Reserved
+                </span>
+                <span class="ShortText">©</span>
+            </span>
+</p><p class="p_right">
+            <span class="globalFooterText_Right"><a href="https://www.youtube.com/playlist?list=PLIS_PT5g7EhnQhdb0wFbbewpGD0i-3dwY"><img alt="YouTube" title="YouTube" src='/Images/IHSGlobal/YouTube.png' /></a>            
+            </span><span class="globalFooterText_Right"><a href="https://www.linkedin.com/company/131598/"><img alt="Linkedin" title="Linkedin" src='/Images/IHSGlobal/linkedin.png' /></a>
+            </span><span class="globalFooterText_Right"><a href="https://twitter.com/IHS4Maritime"><img alt="Twitter" title="Twitter" src='/Images/IHSGlobal/twitter.png' /></a>
+            </span><span class="globalFooterText_Right"><a href="https://www.facebook.com/IHSMarkit/"><img alt="Facebook" title="Facebook" src='/Images/IHSGlobal/facebook.png' /></a>
+            </span>
+        </p>
+    </footer>
+    </div>
+
+ </body>
+</html>
