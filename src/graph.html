@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title> Graph </title>
+    <meta charset="utf-8" />
+
+    <script type="text/javascript" src="/static/js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" id="MathJax-script" async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css" type = "text/css"/>
+    <meta name="viewport" content = "width=device-width, initial-scale=1.0">
+    <style type="text/css">
+        html,
+        body {
+          height:100%
+        }
+        #main_row_div{
+            height:95%;
+        }
+        /*#main_div{
+            height: 100%;
+            overflow: hidden;
+        }*/
+        #equations_form{
+            height: 100%;
+            overflow-y: scroll;
+        }
+    </style>
+    <style>
+        body { margin: 0; }
+        canvas { width: 100%; height: 100% }
+    </style>
+</head>
+
+
+<body class="body" style="background-color:#f6f6f6">
+
+<script type="module">
+    import { create_equation_form } from './equation_form.js'
+    var add_equation_btn =  document.createElement('button');
+    // make_graph_btn.type = "submit";
+    add_equation_btn.type = "button";
+    add_equation_btn.className = "btn btn-primary";
+    add_equation_btn.id = "add_equation_btn";
+    add_equation_btn.addEventListener("click", create_equation_form, false);
+    add_equation_btn.textContent = "Add Equation";
+    var main_div = document.querySelector("#main_div")
+    main_div.insertBefore(add_equation_btn, main_div.firstChild)
+    add_equation_btn.click();
+    // document.body.append(add_equation_btn);
+</script>
+
+
+
+<!-- <b>`intint(x^2-y^2)`</b> -->
+</body>
+
+</html>
+
+<div class="h-100 container col-sm-12" id="main_div">
+    <div class="row" id="main_row_div">
+        <div class="col-sm-9" id="canvas_parent_div">
+            <canvas id="threejs_canvas">
+            </canvas>
+        </div>
+
+    </div>
+</div>
