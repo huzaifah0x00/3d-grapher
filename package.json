@@ -1,1 +1,23 @@
-
+{
+  "name": "graphthis",
+  "description": "3d equation grapher",
+  "version": "0.0.1",
+  "dependencies": {
+    "evaluatex": "2.1.2",
+    "three": "0.113.2",
+    "http-server": "0.12.1"
+  },
+  "devDependencies": {
+  },
+  "engines": {
+    "node": "^4.0.0",
+    "npm": "^3.0.0"
+  },
+  "license": "MIT",
+  "scripts": {
+    "lint": "eslint .",
+    "start": "http-server",
+    "test": "echo 'no tests'",
+    "validate": "npm ls >/dev/null"
+  }
+}

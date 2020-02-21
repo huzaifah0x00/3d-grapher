@@ -1,1 +1,1 @@
-web: npm install http-server; http-server
+web: npm install; npm start
