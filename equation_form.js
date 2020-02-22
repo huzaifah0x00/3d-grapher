@@ -1,10 +1,8 @@
 var eq_input_count = 0;
-import {evaluatex} from "./node_modules/evaluatex/dist/evaluatex.min.js";
+import  "./node_modules/evaluatex/dist/evaluatex.min.js";
 
 import  {make_and_add_graph_to_scene} from "./graph.js";
 
-var func = evaluatex("x^2+1^2");
-console.log(func({x:1, y:2}));
 
 // function change_to_asciimath(){
 //     return;
